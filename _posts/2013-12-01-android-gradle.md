@@ -1,5 +1,7 @@
 # A day with Android and Gradle
 
+Update 2014-Jan-02: Some corrections after feedback from @Vampire.
+
 Once in a while I have an issue with my Android phone which is painful enough
 that I decide to fix it. Since I am not a regular Android developer, every time
 I do this I find that I have lots of new stuff to learn. This time I get to
@@ -72,6 +74,8 @@ decide to run it in the first place?
 Here is what gradle is does (not necessarily in exactly this order due to lazy
 evaluation):
 
+* Process `settings.gradle`. The command `include ':Offline-Calendar'`
+  registers `/Offline-Calendar/build.gradle` in addition to `/build.gradle`.
 * Enter
   [build.gradle](https://github.com/dschuermann/offline-calendar/blob/e7d1324bf5d1760089f5ad0497f242a5f29074c0/build.gradle).
 * Enter `buildscript { ... }`.
@@ -84,11 +88,11 @@ evaluation):
   [8.4 External dependencies](http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html#N105C3).
   I could not find documentation on the plus sign, but @Vampire tells me that
   "0.6.+ means anything starting with 0.6. and thereof the newest one."
+  Update: See also [50.7 How dependency resolution works](http://www.gradle.org/docs/current/userguide/userguide_single.html#sec:dependency_resolution).
 * Download `gradle-0.6.3.jar` from [Maven central](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.android.tools.build%22%20AND%20a%3A%22gradle%22).
   I wonder if those signatures are actually verified.
 * Exit `build.gradle`.
-* Enter `settings.gradle`.
-* `include ':Offline-Calendar'` enters `Offline-Calendar/build.gradle`.
+* Enter `Offline-Calendar/build.gradle`.
 * The command `apply plugin: 'android'` eventually gets to gradle's
   [DefaultPluginRegistry](https://github.com/gradle/gradle/blob/REL_1.8/subprojects/core/src/main/groovy/org/gradle/api/internal/plugins/DefaultPluginRegistry.java#L80),
   which reads `implementation-class=com.android.build.gradle.AppPlugin` from
